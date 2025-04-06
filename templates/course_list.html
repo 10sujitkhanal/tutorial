@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block content %}
+
+  <!-- Page Title -->
+  <section class="bg-green-100 py-12 text-center">
+    <div class="max-w-3xl mx-auto px-4">
+      <h1 class="text-4xl md:text-5xl font-bold text-green-800 mb-4">All Courses List</h1>
+      <p class="text-lg text-green-900">Explore the full collection of Programming tutorials and courses.</p>
+    </div>
+  </section>
+
+  <!-- Course Grid -->
+  <section class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {% for c in course %}
+        <div class="bg-white rounded-2xl shadow-md hover:shadow-xl overflow-hidden transition transform hover:-translate-y-1">
+          <img src="{{ c.image.url }}" class="w-full h-48 object-cover" alt="{{ c.title }}">
+
+          <div class="p-6 space-y-3">
+            <!-- Category -->
+            <span class="inline-block bg-green-100 text-green-800 text-xs font-medium px-3 py-1 rounded-full">
+              {{ c.category.name }}
+            </span>
+
+            <!-- Title -->
+            <h3 class="text-xl font-semibold text-gray-900">{{ c.title }}</h3>
+
+            <!-- Full Description -->
+            <p class="text-gray-600 text-sm whitespace-pre-line">{{ c.description }}</p>
+
+            <!-- CTA -->
+            <div class="pt-3">
+              <a href="/courses/{{ c.slug }}/details/" class="text-green-700 font-medium hover:underline">
+                Start Course →
+              </a>
+            </div>
+          </div>
+        </div>
+        {% empty %}
+        <p class="text-center text-gray-500 col-span-3">No courses found.</p>
+        {% endfor %}
+      </div>
+
+      <!-- Pagination -->
+      <div class="mt-12 flex justify-center items-center space-x-2">
+        {% if course.has_previous %}
+          <a href="?page={{ course.previous_page_number }}" class="px-4 py-2 bg-white border rounded hover:bg-gray-100">Previous</a>
+        {% endif %}
+
+        {% for num in course.paginator.page_range %}
+          {% if course.number == num %}
+            <span class="px-4 py-2 bg-green-600 text-white border rounded">{{ num }}</span>
+          {% elif num >= course.number|add:'-2' and num <= course.number|add:'2' %}
+            <a href="?page={{ num }}" class="px-4 py-2 bg-white border rounded hover:bg-gray-100">{{ num }}</a>
+          {% endif %}
+        {% endfor %}
+
+        {% if course.has_next %}
+          <a href="?page={{ course.next_page_number }}" class="px-4 py-2 bg-white border rounded hover:bg-gray-100">Next</a>
+        {% endif %}
+      </div>
+      
+    </div>
+  </section>
+
+{% endblock %}

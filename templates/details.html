@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block content %}
+  <div class="flex max-w-7xl mx-auto px-4 py-10 gap-8">
+
+    <!-- Sidebar with Course Info and Lessons -->
+    <aside class="w-80 bg-white shadow-md rounded-xl p-6 h-max sticky top-28 hidden md:block space-y-6">
+
+      <!-- Course Info Section -->
+      <div>
+        <div class="flex items-center space-x-4">
+          {% if course.image %}
+            <img src="{{ course.image.url }}" alt="Course Image" class="w-16 h-16 rounded-full object-cover">
+          {% endif %}
+        <h1 class="text-2xl font-bold text-green-900">{{ course.title }}</h1>
+        </div>
+        <p class="text-sm text-gray-700 mt-2">
+          {{ course.description }}
+        </p>
+        <div class="mt-3 space-x-2">
+          <span class="bg-green-200 text-green-900 text-xs px-2 py-1 rounded">{{ course.level }}</span>
+          {% if course.is_self_paced %}
+            <span class="bg-green-200 text-green-900 text-xs px-2 py-1 rounded">Self-Paced</span>
+          {% endif %}
+        </div>
+        <div class="mt-3 flex items-center space-x-2">
+          {% if course.category.icon %}
+            <img src="{{ course.category.icon.url }}" alt="Category Icon" class="h-5 w-5">
+          {% endif %}
+          <span class="text-xs text-gray-600">{{ course.category.name }}</span>
+        </div>
+      </div>
+
+      <!-- Lesson List -->
+      <div>
+        <h2 class="text-lg font-semibold mb-2">Course Lessons</h2>
+        <ul class="space-y-2 text-sm text-gray-700 max-h-[500px] overflow-y-auto pr-2">
+          {% for lesson in course.lessons.all %}
+            <li class="hover:bg-green-100 {% if forloop.first %}bg-green-100{% endif %} px-3 py-2 rounded cursor-pointer">
+              <a href="/courses/{{course.slug}}/{{lesson.slug}}/details/" class="{% if forloop.first %} text-green-700 {% else %}text-gray-700{% endif %}">
+                {{ forloop.counter }}. {{ lesson.title }}
+              </a>
+            </li>
+          {% empty %}
+            <li>No lessons available yet.</li>
+          {% endfor %}
+        </ul>
+      </div>
+
+    </aside>
+
+    <!-- Main Course Content -->
+    <main class="flex-1 space-y-10">
+      {{lesson.content | safe}}
+    </main>
+  </div>
+{% endblock %}

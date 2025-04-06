@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{{ course.title }} - Sujit Tutorial</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex flex-col min-h-screen bg-gray-50 text-gray-800 font-sans">
+
+  <!-- Header -->
+  <header class="bg-white shadow sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto flex items-center justify-between p-4">
+      <!-- Logo or Title -->
+      <div class="text-2xl font-bold text-green-700">
+        <a href="/" class="hover:text-green-800">Sujit Tutorials</a>
+      </div>
+      <!-- You can add navigation links or buttons here if needed -->
+    </div>
+  </header>
+
+  <!-- Main Content Area -->
+  <main class="flex-grow">
+    {% block content %}
+    {% endblock %}
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white shadow mt-12">
+    <div class="max-w-7xl mx-auto py-6 px-4 flex justify-between text-sm text-gray-600">
+      <p>&copy; 2025 TutorialsPoint. All rights reserved.</p>
+      <div class="space-x-4">
+        <a href="#" class="hover:text-black">Privacy</a>
+        <a href="#" class="hover:text-black">Terms</a>
+        <a href="#" class="hover:text-black">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

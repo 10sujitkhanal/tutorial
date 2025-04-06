@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block content %}
+
+  <!-- Hero Section -->
+  <section class="bg-green-100 py-20 text-center">
+    <div class="max-w-3xl mx-auto px-4">
+      <h1 class="text-4xl md:text-5xl font-bold text-green-800 mb-4">Learn Programming Language</h1>
+      <p class="text-lg text-green-900 mb-6">Free tutorials and resources to learn from beginner to advanced.</p>
+      <a href="/courses/list/" class="bg-green-700 text-white px-6 py-3 rounded hover:bg-green-800">Start Learning</a>
+    </div>
+  </section>
+
+  <!-- Categories Section with Icons -->
+  <section class="py-12">
+    <div class="max-w-7xl mx-auto px-4">
+      <h2 class="text-3xl font-bold mb-10 text-center">Categories</h2>
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 text-center">
+        {% for cat in category %}
+        <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
+          <a href="/courses/list/?category={{cat.slug}}">
+            <img src="{{cat.icon.url}}" alt="{{cat.name}}" class="w-16 h-16 mx-auto mb-4">
+            <h3 class="font-semibold text-lg">{{cat.name}}</h3>
+          </a>
+        </div>
+      {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Courses Section -->
+  <section class="py-16 bg-gray-100">
+    <div class="max-w-7xl mx-auto px-4">
+      <h2 class="text-3xl font-bold mb-10 text-center">All Courses</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Course Card -->
+        {% for c in course %}
+        <div class="bg-white rounded-2xl shadow-md hover:shadow-xl overflow-hidden transition transform hover:-translate-y-1">
+          <img src="{{ c.image.url }}" class="w-full h-48 object-cover" alt="{{ c.title }}">
+        
+          <div class="p-6 space-y-3">
+            <!-- Category Tag -->
+            <span class="inline-block bg-green-100 text-green-800 text-xs font-medium px-3 py-1 rounded-full">
+              {{ c.category.name }}
+            </span>
+        
+            <h3 class="text-xl font-semibold text-gray-900">{{ c.title }}</h3>
+            <p class="text-gray-600 text-sm">{{ c.description|truncatechars:150 }}</p>
+        
+            <div class="pt-3">
+              <a href="/courses/{{ c.slug }}/details/" class="text-green-700 font-medium hover:underline">
+                Start Course →
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        {% endfor %}
+      </div>
+      <div class="mt-12 text-center">
+        <a href="/courses/list/" class="inline-block bg-green-700 text-white px-6 py-3 rounded-lg font-medium hover:bg-green-800 transition">
+          View All Courses
+        </a>
+      </div>
+    </div>
+  </section>
+
+  {% endblock %}

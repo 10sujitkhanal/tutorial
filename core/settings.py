@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'ckeditor',
     'course',
+    'cloudinary',
+    'cloudinary_storage',
 ]
 
 MIDDLEWARE = [
@@ -125,8 +127,22 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
+# Add your Cloudinary credentials
+cloudinary.config(
+    cloud_name='dcmcl8zmy',
+    api_key='641296384812942',
+    api_secret='oigSqg6FFChX6OihH94r72mdEvU'
+)
+
+# Configure Django to use Cloudinary as the default storage for images
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+# Optionally, set up a backup URL for Cloudinary's resources
+MEDIA_URL = 'https://res.cloudinary.com/your-cloud-name/'
 
 CKEDITOR_UPLOAD_PATH = 'uploads/'
 

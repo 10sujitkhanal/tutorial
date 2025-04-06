@@ -2,10 +2,11 @@ from django.db import models
 from ckeditor.fields import RichTextField
 from django.utils.text import slugify
 from django.urls import reverse
+from cloudinary.models import CloudinaryField
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
-    icon = models.ImageField(upload_to='category_icons/', blank=True, null=True)
+    icon = CloudinaryField('category_icons/', blank=True, null=True)
     slug = models.SlugField(unique=True, blank=True)
 
     def __str__(self):
@@ -26,7 +27,7 @@ class Course(models.Model):
     title = models.CharField(max_length=255)
     slug = models.SlugField(unique=True, blank=True)
     description = models.TextField()
-    image = models.ImageField(upload_to='course_images/', blank=True, null=True)
+    image = CloudinaryField('course_images/', blank=True, null=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='courses')
     level = models.CharField(max_length=20, choices=LEVEL_CHOICES, default='Beginner')
     is_self_paced = models.BooleanField(default=True)
